@@ -11,6 +11,8 @@ const refs = {
     clockFaceSeconds: document.querySelector('[data-seconds]'),
 };
 
+let pickTime = null;
+
 const options = {
     enableTime: true,
     time_24hr: true,
@@ -22,33 +24,62 @@ const options = {
 };
 
 const selectedDates = flatpickr('#datetime-picker', options);
-let pickTime = null;
-const timer = {
-    intervalId: null,
+
+class Timer { 
+    constructor({ onTick }) { 
+        this.intervalId = null;
+        this.onTick = onTick;
+    }
+
     start() {
         if (Date.now() < pickTime) {
             this.intervalId = setInterval(() => {
                 const currentTime = Date.now();
                 const deltaTime = pickTime - currentTime;
-                const time = convertMs(deltaTime);
-                // console.log(`${days}:${hours}:${minutes}:${seconds}`);
-                // convertMs(time);
-                updateClockFace(time);
+                const time = this.convertMs(deltaTime);
+
+                this.onTick(time);
             }, 1000)
         }
         else { 
             Notiflix.Notify.failure('You cheat!')
+            return;
         }
-    },
+    }
+
     stop() { 
         clearInterval(this.intervalId);
-    },
+        // ********** Сбрасывает на 00 ******************
+        // const time = this.convertMs(0);
+        // this.onTick(time)
+    }
+
+    convertMs(ms) {
+        const second = 1000;
+        const minute = second * 60;
+        const hour = minute * 60;
+        const day = hour * 24;
+
+        const days = this.addLeadingZero(Math.floor(ms / day));
+        const hours = this.addLeadingZero(Math.floor((ms % day) / hour));
+        const minutes = this.addLeadingZero(Math.floor(((ms % day) % hour) / minute));
+        const seconds = this.addLeadingZero(Math.floor((((ms % day) % hour) % minute) / second));
+
+        return { days, hours, minutes, seconds };
+    }
+
+    addLeadingZero(value) { 
+    return String(value).padStart(2, '0');
+    }
+
 }
+const timer = new Timer({
+    onTick: updateClockFace
+});
 
 refs.input.addEventListener('input', checkTimer);
 refs.btn.addEventListener('click', onTimerStart);
 refs.btn.setAttribute('disabled', true);
-
 
 function checkTimer() {
     pickTime = selectedDates.selectedDates[0].getTime();    
@@ -58,7 +89,7 @@ function checkTimer() {
     } else if (refs.btn.textContent === 'Stop') { 
         return;
     }
-    refs.btn.classList.toggle('active')
+    refs.btn.classList.add('active')
     refs.btn.removeAttribute('disabled');
     Notiflix.Notify.success(`It’s just a little bit`) 
 };
@@ -74,7 +105,7 @@ function onTimerStart() {
         refs.btn.textContent = 'Start';
         timer.stop();
         Notiflix.Notify.warning('Okay, let’s wait');
-}    
+    }    
 };
 
 function updateClockFace({ days, hours, minutes, seconds }) { 
@@ -83,30 +114,3 @@ function updateClockFace({ days, hours, minutes, seconds }) {
     refs.clockFaceMinutes.textContent = `${minutes}`;
     refs.clockFaceSeconds.textContent = `${seconds}`;
 };
-
-function addLeadingZero(value) { 
-    return String(value).padStart(2, '0');
-};
-
-function convertMs(ms) {
-  // Number of milliseconds per unit of time
-  const second = 1000;
-  const minute = second * 60;
-  const hour = minute * 60;
-  const day = hour * 24;
-
-  // Remaining days
-  const days = addLeadingZero(Math.floor(ms / day));
-  // Remaining hours
-  const hours = addLeadingZero(Math.floor((ms % day) / hour));
-  // Remaining minutes
-  const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
-  // Remaining seconds
-  const seconds = addLeadingZero(Math.floor((((ms % day) % hour) % minute) / second));
-
-  return { days, hours, minutes, seconds };
-};
-
-// console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
-// console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
-// console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
