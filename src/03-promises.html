@@ -4,27 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Promise generator</title>
-    <link rel="stylesheet" href="css/common.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/common.css" />
   </head>
   <body>
-    <p><a href="index.html">Go back</a></p>
-
-    <form class="form">
-      <label>
-        First delay (ms)
-        <input type="number" name="delay" required />
-      </label>
-      <label>
-        Delay step (ms)
-        <input type="number" name="step" required />
-      </label>
-      <label>
-        Amount
-        <input type="number" name="amount" required />
-      </label>
-      <button type="submit">Create promises</button>
-    </form>
-
+    <p><a href="./index.html">Go back</a></p>
+    <div class="container">
+      <form class="form">
+        <label>
+          First delay (ms)
+          <input type="number" name="delay" required />
+        </label>
+        <label>
+          Delay step (ms)
+          <input type="number" name="step" required />
+        </label>
+        <label>
+          Amount
+          <input type="number" name="amount" required />
+        </label>
+        <button type="submit">Create promises</button>
+      </form>
+    </div>
     <script src="js/03-promises.js"></script>
+    <script src="./index.js"></script>
   </body>
 </html>

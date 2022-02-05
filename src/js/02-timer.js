@@ -97,6 +97,7 @@ function checkTimer() {
         refs.clockFaceHours.textContent = '00';
         refs.clockFaceMinutes.textContent = '00';
         refs.clockFaceSeconds.textContent = '00';
+        // window.alert('Please choose a date in the future')
         Notiflix.Notify.failure('Please choose a date in the future');
         return;
     } else if (refs.btn.textContent === 'Stop') { 
