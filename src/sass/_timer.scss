@@ -1,10 +1,13 @@
 .container {
+  display: block;
+  justify-content: center;
   font-family: 'Playfair Display SC', serif;
   width: 1000px;
   margin-left: auto;
   margin-right: auto;
   .input {
     display: flex;
+    justify-content: center;
     align-items: center;
   }
 }
@@ -54,6 +57,7 @@ button {
   width: 640px;
   display: flex;
   margin-right: auto;
+  margin-left: auto;
   .field {
     height: 100px;
     width: 150px;

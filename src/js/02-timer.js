@@ -34,14 +34,22 @@ class Timer {
     start() {
         if (Date.now() < pickTime) {
             this.intervalId = setInterval(() => {
+                if (new Date(pickTime).toString() === new Date().toString()) {
+                    clearInterval(this.intervalId);
+                    refs.btn.textContent = 'Start';
+                    refs.btn.setAttribute('disabled', true);
+                    Notiflix.Notify.success('All right, time`s up!')
+                }
+                else {
                 const currentTime = Date.now();
                 const deltaTime = pickTime - currentTime;
                 const time = this.convertMs(deltaTime);
-
-                this.onTick(time);
+                    
+                this.onTick(time);                
+                }
             }, 1000)
         }
-        else { 
+        else  { 
             Notiflix.Notify.failure('You cheat!')
             return;
         }
@@ -109,8 +117,17 @@ function onTimerStart() {
 };
 
 function updateClockFace({ days, hours, minutes, seconds }) { 
-    refs.clockFaceDays.textContent = `${days}`;
+    if (refs.clockFaceDays.value === '00' && refs.clockFaceHours.value === '00' &&
+        refs.clockFaceMinutes.value === '00' && refs.clockFaceSeconds.value === '00') {
+        timer.stop();
+        refs.clockFaceDays.textContent = '00';
+        refs.clockFaceHours.textContent = '00';
+        refs.clockFaceMinutes.textContent = '00';
+        refs.clockFaceSeconds.textContent = '00';
+    }
+    else { refs.clockFaceDays.textContent = `${days}`;
     refs.clockFaceHours.textContent = `${hours}`;
     refs.clockFaceMinutes.textContent = `${minutes}`;
-    refs.clockFaceSeconds.textContent = `${seconds}`;
+    refs.clockFaceSeconds.textContent = `${seconds}`;}
+    
 };
