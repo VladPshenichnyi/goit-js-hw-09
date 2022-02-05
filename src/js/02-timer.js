@@ -92,6 +92,11 @@ refs.btn.setAttribute('disabled', true);
 function checkTimer() {
     pickTime = selectedDates.selectedDates[0].getTime();    
     if (Date.now() > pickTime) {
+        timer.stop();
+        refs.clockFaceDays.textContent = '00';
+        refs.clockFaceHours.textContent = '00';
+        refs.clockFaceMinutes.textContent = '00';
+        refs.clockFaceSeconds.textContent = '00';
         Notiflix.Notify.failure('Please choose a date in the future');
         return;
     } else if (refs.btn.textContent === 'Stop') { 
