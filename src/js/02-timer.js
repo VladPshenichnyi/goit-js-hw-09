@@ -99,7 +99,7 @@ function checkTimer() {
         refs.clockFaceSeconds.textContent = '00';
         // window.alert('Please choose a date in the future')
         Notiflix.Report.failure(
-            'Problem',
+            'Error',
             'Please choose a date in the future',
             'Okay',
             );
