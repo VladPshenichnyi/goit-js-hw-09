@@ -38,7 +38,10 @@ class Timer {
                     clearInterval(this.intervalId);
                     refs.btn.textContent = 'Start';
                     refs.btn.setAttribute('disabled', true);
-                    Notiflix.Notify.success('All right, time`s up!')
+                    Notiflix.Report.success(
+                        'All right, time`s up!',
+                        'All right, let`s just try it again.',
+                        'Okey',)
                 }
                 else {
                 const currentTime = Date.now();
