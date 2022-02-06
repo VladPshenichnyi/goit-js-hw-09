@@ -5,4 +5,4 @@ var t,e=arguments[3];!function(e,i){"function"==typeof t&&t.amd?t([],function(){
 },{}],"GyVV":[function(require,module,exports) {
 "use strict";var e=t(require("notiflix"));function t(e){return e&&e.__esModule?e:{default:e}}const u=document.querySelector("form");function l(t){t.preventDefault();const{elements:u}=t.currentTarget,{delay:l,step:n,amount:a}=u;let r={delayValue:Number(l.value),stepValue:Number(n.value),amountValue:Number(a.value)},o=r.delayValue,s=r.stepValue,i=r.amountValue,m=null;for(let f=0;f<i;f++){function c(e,t){return new Promise((u,l)=>{const n=Math.random()>.3;setTimeout(()=>{n?u(`${e} in ${t}ms`):l(`${e} in ${t}ms`)},t)})}f>0&&(o+=s),c(m+=1,o).then((t,u)=>{e.default.Notify.success(`✅ Fulfilled promise ${t}`)}).catch((t,u)=>{e.default.Notify.failure(`❌ Rejected promise ${t}`)})}}u.addEventListener("submit",l);
 },{"notiflix":"W3Ap"}]},{},["GyVV"], null)
-//# sourceMappingURL=/goit-js-hw-09/03-promises.fe094d11.js.map
+//# sourceMappingURL=/goit-js-hw-09/03-promises.85ee1c48.js.map
