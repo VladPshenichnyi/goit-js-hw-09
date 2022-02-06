@@ -38,7 +38,7 @@ function handleSubmit(e) {
                     reject(`${position} in ${delayValue}ms`)
                 }
             }, delayValue)
-        };)
+        })
         };
     };
 };
